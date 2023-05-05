@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuração</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forum.css' %}">
+</head>
+<body>
+    
+{% include 'bases/navbar.html' %}
+
+<div class="centralizar">
+    <div class="avisos" style="background-color: white;">
+        <div>
+            {%if conf_tipo == 0 %}
+            <h1>Adicionar</h1>
+            {% endif %}
+        
+            {%if conf_tipo == 1 %}
+            <h1>Configurar</h1>
+            {% endif %}
+        
+            {%if conf_tipo == 2 %}
+            <h1>Deseja mesmo realizar essa operação?</h1>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="centralizar">
+    <form method="post" enctype=multipart/form-data style="background-color: white;border-radius: 15px;">
+        {% csrf_token %}
+        {{ form }}
+        <div style="margin-top: 15px;">
+            <button class="btnEnviar" type="submit">Confirmar</button>
+            <a class="btnCancelar" href="{% url 'redirect' %}">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+
+
+
+</body>
+</html>

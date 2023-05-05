@@ -1,0 +1,51 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forum.css' %}">
+</head>
+<body>
+
+{% include 'bases/navbar.html' %}
+<div class="centralizar">
+
+    <div class="categoria" style="margin-bottom: 15px;">
+        <div class="categoriaHead configuracao">
+            <h1>Configuração</h1>
+        </div>
+        <div class="categoriaBody configuracao">
+            <a href="{% url 'editsubforum' user.secretKey subcategoria_lista.id %}">Editar SubCategoria</a>
+        </div>
+        <div class="categoriaBody configuracao">
+            <a href="{% url 'deletesubforum' user.secretKey subcategoria_lista.id %}">Deletar SubCategoria</a>
+        </div>
+    </div>
+
+
+    <div class="categoria">
+        <div class="categoriaHead" >
+            <h1>{{ subcategoria_lista.titulo }}</h1>
+            <div class="opcoes" style="margin-right: 15px;">
+                <a  href="{% url 'addtopico' user.secretKey subcategoria_lista.id %}"><img src="{% static 'images/add.svg' %}" alt="Adicionar"></a>
+            </div>
+        </div>
+        <!-- Aqui vai ficar a lista de subcategorias -->
+        {% for topico in subcategoria_lista.topico.all %}
+        <div class="categoriaBody">
+            <a href="{% url 'topico' user.secretKey  subcategoria_lista.id topico.id %}">{{ topico.titulo }}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

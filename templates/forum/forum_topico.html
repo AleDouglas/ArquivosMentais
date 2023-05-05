@@ -1,0 +1,89 @@
+{% load static %}
+{% load blog_extras %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ topico_lista.titulo }}</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forum.css' %}">
+</head>
+<body>
+
+{% include 'bases/navbar.html' %}
+<div class="ConfArea">
+
+
+</div>
+
+
+<div class="centralizar">
+
+
+    <div class="categoria" style="margin-bottom: 15px;">
+        <div class="categoriaHead configuracao">
+            <h1>Administração</h1>
+        </div>
+        <div class="categoriaBody configuracao">
+            <a href="{% url 'avisos' %}" style="color: red;">AVISOS GLOBAIS</a>
+        </div>
+        <div class="categoriaBody configuracao">
+            <a href="{% url 'subforum' user.secretKey subcategoria_id%}">Voltar para Subcategoria</a>
+        </div>
+    </div>
+
+
+    <div class="topicoHead" style="background-color: #115959;">
+        <h1>{{topico_lista.titulo}}</h1>
+        <div class="opcoes" style="margin-top: 5px;margin-bottom: 5px;">
+            <a href="{% url 'edittopico' user.secretKey topico_lista.id%}"><img src="{% static 'images/editar.svg' %}" alt=""></a>
+            <a href="{% url 'deletetopico' user.secretKey topico_lista.id%}"><img src="{% static 'images/delete.svg' %}" alt=""></a>
+        </div>
+        <p>Data: {{ topico_lista.criado }}</p>
+    </div>
+    <div class="topicoBody">
+        {{ topico_lista.texto|convert_markdown|safe }}
+    </div>
+
+    <div class="categoriaHead configuracao">
+        <h3>Arquivos</h3>
+        <div class="opcoes" style="margin-top: 5px;margin-bottom: 5px;margin-right: 15px;">
+            <a href="{% url 'addarquivo' user.secretKey topico_lista.id %}"><img src="{% static 'images/add_2.svg' %}" alt=""></a>
+        </div>
+    </div>
+    {% for arq in topico_lista.arquivo.all %}
+    <div class="categoriaBody configuracao" style="display: flex;justify-content: space-between;align-items: center;flex-direction: row;">
+        <a href="{{arq.arquivo.url}}">{{ arq.titulo }}</a>
+        <p>{{ arq.descricao }}</p>
+        <div class="opcoes" style="margin-top: 5px;margin-bottom: 5px;">
+            <a href="{% url 'editarquivo' user.secretKey arq.id %}"><img src="{% static 'images/editar.svg' %}" alt=""></a>
+            <a href="{% url 'deletearquivo' user.secretKey arq.id %}"><img src="{% static 'images/delete.svg' %}" alt=""></a>
+        </div>
+    </div>
+    {% endfor %}
+
+    
+    <div class="categoriaHead configuracao" style="margin-top: 3%">
+        <h3>Comentarios</h3>
+        <div class="opcoes" style="margin-top: 5px;margin-bottom: 5px;margin-right: 15px;">
+            <a href="{% url 'addcomentario' user.secretKey topico_lista.id %}"><img src="{% static 'images/add_2.svg' %}" alt=""></a>
+        </div>
+    </div>
+    {% for cmt in topico_lista.comentario.all %}
+    <div class="categoriaBody configuracao" style="display: flex;justify-content: space-between;align-items: center;flex-direction: row;">
+        {{ cmt.comentario|convert_markdown|safe }}
+        <div class="opcoes" style="margin-top: 5px;margin-bottom: 5px;">
+            <a href="{% url 'editcomentario' user.secretKey cmt.id %}"><img src="{% static 'images/editar.svg' %}" alt=""></a>
+            <a href="{% url 'deletecomentario' user.secretKey cmt.id %}"><img src="{% static 'images/delete.svg' %}" alt=""></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

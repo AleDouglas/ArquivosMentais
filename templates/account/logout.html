@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sair da conta</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forum.css' %}">
+</head>
+<body>
+
+
+
+{% include 'bases/navbar.html' %}
+
+<div class="centralizar">
+    <div class="avisos" style="background-color: white;">
+        <div>
+            <p><span style="color: red">Deseja realizar essa operação?</span></p>
+        </div>
+    </div>
+</div>
+
+<div class="centralizar" >
+    <form method="post" style="background-color: white;">
+        {% csrf_token %}
+        {{ form }}
+        <div style="margin-top: 15px;align-self: center;">
+            <button class="btnCancelar" type="submit" style="cursor: pointer;">Sair</button>
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>

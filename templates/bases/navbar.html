@@ -1,0 +1,16 @@
+{% block content %}
+
+
+<header>
+
+    <div class="Logo">
+        <p><a href="{% url 'redirect' %}" class="logoLink"style="text-decoration: none;color:white;font-size: 24px;">ArquivosMentais</a></p>
+    </div>
+    <div class="MenuUser">
+        <a href="{% url 'account_logout' %}">Sair</a>
+    </div>
+
+</header>
+
+
+{% endblock content %}
